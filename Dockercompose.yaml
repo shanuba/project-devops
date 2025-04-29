@@ -1,0 +1,8 @@
+Version: "3.8"
+services:
+  react-app:
+    build: .
+    container_name: dockimg-container
+    restart: always
+    ports:
+    - "80:80"
