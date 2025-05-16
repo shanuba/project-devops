@@ -21,13 +21,10 @@ pipeline{
             stage('Build & Push Docker image'){
                 steps{
                     sh'./build.sh'
+                     sh'./deploy.sh'
                 }
             }
-            stage('pull the pushed image and deploy to EC2'){
-            steps{
-            sh '''
-            scp -o StrictHostKeyChecking=no -i /var/lib/jenkins/.ssh/shanu.pem deploy.sh linux@3.147.77.141:/home/linux/
-            ssh -o StrictHostKeyChecking=no -i /var/lib/jenkins/.ssh/shanu.pem ec2-user@3.147.77.141 "BRANCH_NAME=${BRANCH_NAME} bash /home/linux/deploy.sh"
+            
                 '''
             }
         }
