@@ -1,12 +1,14 @@
 #!/bin/bash
-echo"current branch:$BRANCH_NAME"
-if["$BRANCH_NAME"=="dev-repo"];then
-docker build -t shanuba/dev-repo-dockimg
-echo"Shanuba" | docker login -u "shanuba" --password-stdin 
-docker push shanuba/dev-repo-dockimg:latest
 
-elif["$BRANCH_NAME"=="prod-repo"];then
-docker build -t shanuba/prod-repo-dockimg
-echo"Shanuba" | docker login -u "shanuba" --password-stdin 
-docker push shanuba/prod-repo-dockimg:latest
+echo "Current branch: $GIT_BRANCH"
+
+if [[ $GIT_BRANCH == "origin/dev" ]]; then
+    docker build -t shanuba/dev-repo .
+    echo "Shanuba" | docker login -u shanuba -p dckr_pat_z0obnJEPyEqtJNQtxCNOzaig89U
+    docker push shanuba/dev-repo
+
+elif [[ $GIT_BRANCH == "origin/main" ]]; then
+    docker build -t shanuba/prod-repo .
+    echo "Shanuba" | docker login -u shanuba -p dckr_pat_z0obnJEPyEqtJNQtxCNOzaig89U
+    docker push shanuba/prod-repo
 fi
